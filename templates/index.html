@@ -6,250 +6,53 @@
 <title>KT Capture Tool</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background: #f0f4f8;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
-  header {
-    background: #1B3A6B;
-    color: white;
-    padding: 0 2rem;
-    height: 64px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-shrink: 0;
-  }
-
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; background: #f0f4f8; min-height: 100vh; display: flex; flex-direction: column; }
+  header { background: #1B3A6B; color: white; padding: 0 2rem; height: 64px; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
   .header-left { display: flex; align-items: center; gap: 14px; }
   .logo { font-size: 24px; }
   .header-title { font-size: 17px; font-weight: 600; }
   .header-sub { font-size: 11px; opacity: 0.7; margin-top: 2px; }
-  .badge {
-    background: rgba(255,255,255,0.15);
-    padding: 5px 12px;
-    border-radius: 12px;
-    font-size: 11px;
-  }
-
-  main {
-    flex: 1;
-    max-width: 900px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  /* STEPS */
-  .steps {
-    display: flex;
-    gap: 0;
-    background: white;
-    border-radius: 12px;
-    border: 1px solid #dde3ec;
-    overflow: hidden;
-  }
-
-  .step {
-    flex: 1;
-    padding: 14px 16px;
-    text-align: center;
-    font-size: 12px;
-    color: #888;
-    border-right: 1px solid #dde3ec;
-    transition: all 0.2s;
-  }
+  .badge { background: rgba(255,255,255,0.15); padding: 5px 12px; border-radius: 12px; font-size: 11px; }
+  main { flex: 1; max-width: 900px; width: 100%; margin: 0 auto; padding: 2rem 1.5rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  .steps { display: flex; gap: 0; background: white; border-radius: 12px; border: 1px solid #dde3ec; overflow: hidden; }
+  .step { flex: 1; padding: 14px 16px; text-align: center; font-size: 12px; color: #888; border-right: 1px solid #dde3ec; transition: all 0.2s; }
   .step:last-child { border-right: none; }
   .step.active { background: #1B3A6B; color: white; }
   .step.done { background: #E8EDF5; color: #1B3A6B; }
   .step-num { font-size: 18px; font-weight: 700; display: block; margin-bottom: 2px; }
-
-  /* CARDS */
-  .card {
-    background: white;
-    border-radius: 12px;
-    border: 1px solid #dde3ec;
-    padding: 1.5rem;
-    display: none;
-  }
+  .card { background: white; border-radius: 12px; border: 1px solid #dde3ec; padding: 1.5rem; display: none; }
   .card.active { display: block; }
-
-  .card-title {
-    font-size: 18px;
-    font-weight: 600;
-    color: #1B3A6B;
-    margin-bottom: 6px;
-  }
-  .card-sub {
-    font-size: 13px;
-    color: #888;
-    margin-bottom: 1.5rem;
-  }
-
-  /* FORM */
-  .form-row {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-  .form-group {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-  }
-  .form-group label {
-    font-size: 12px;
-    font-weight: 600;
-    color: #555;
-    text-transform: uppercase;
-    letter-spacing: 0.4px;
-  }
-  .form-group input, .form-group textarea {
-    border: 1px solid #dde3ec;
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 14px;
-    color: #333;
-    background: #fafbfc;
-    outline: none;
-    font-family: inherit;
-    transition: border 0.15s;
-  }
+  .card-title { font-size: 18px; font-weight: 600; color: #1B3A6B; margin-bottom: 6px; }
+  .card-sub { font-size: 13px; color: #888; margin-bottom: 1.5rem; }
+  .form-row { display: flex; gap: 1rem; margin-bottom: 1rem; }
+  .form-group { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .form-group label { font-size: 12px; font-weight: 600; color: #555; text-transform: uppercase; letter-spacing: 0.4px; }
+  .form-group input, .form-group textarea { border: 1px solid #dde3ec; border-radius: 8px; padding: 10px 12px; font-size: 14px; color: #333; background: #fafbfc; outline: none; font-family: inherit; transition: border 0.15s; }
   .form-group input:focus, .form-group textarea:focus { border-color: #1B3A6B; }
   .form-group textarea { resize: vertical; min-height: 80px; }
-
-  /* UPLOAD */
-  .upload-drop {
-    border: 2px dashed #c0ccdc;
-    border-radius: 10px;
-    padding: 2rem;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.15s;
-    background: #f8fafc;
-    margin-bottom: 1rem;
-  }
+  .upload-drop { border: 2px dashed #c0ccdc; border-radius: 10px; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.15s; background: #f8fafc; margin-bottom: 1rem; }
   .upload-drop:hover { border-color: #1B3A6B; background: #f0f4f8; }
   .upload-drop.dragover { border-color: #1B3A6B; background: #E8EDF5; }
   .upload-icon { font-size: 36px; margin-bottom: 8px; }
   .upload-text { font-size: 13px; color: #666; line-height: 1.6; }
   .upload-text strong { color: #1B3A6B; }
-
   .doc-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1rem; }
-  .doc-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    background: #f0f4f8;
-    border-radius: 8px;
-    font-size: 13px;
-    color: #333;
-  }
+  .doc-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #f0f4f8; border-radius: 8px; font-size: 13px; color: #333; }
   .doc-item .doc-icon { font-size: 18px; }
   .doc-item .doc-name { flex: 1; }
   .doc-item .doc-check { color: #22c55e; font-size: 16px; }
-
-  /* QUESTIONS */
   .category-group { margin-bottom: 1.5rem; }
-  .category-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: #1B3A6B;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 8px 12px;
-    background: #E8EDF5;
-    border-radius: 6px;
-    margin-bottom: 10px;
-  }
-
-  .question-item {
-    margin-bottom: 1rem;
-    padding: 14px;
-    border: 1px solid #dde3ec;
-    border-radius: 8px;
-    background: #fafbfc;
-  }
-  .question-text {
-    font-size: 13.5px;
-    font-weight: 600;
-    color: #222;
-    margin-bottom: 10px;
-    line-height: 1.5;
-  }
-  .question-num {
-    display: inline-block;
-    background: #1B3A6B;
-    color: white;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    font-size: 11px;
-    font-weight: 700;
-    text-align: center;
-    line-height: 22px;
-    margin-right: 8px;
-    flex-shrink: 0;
-  }
-  .answer-input {
-    width: 100%;
-    border: 1px solid #dde3ec;
-    border-radius: 6px;
-    padding: 10px 12px;
-    font-size: 13px;
-    color: #333;
-    background: white;
-    font-family: inherit;
-    resize: vertical;
-    min-height: 80px;
-    outline: none;
-    transition: border 0.15s;
-  }
+  .category-title { font-size: 13px; font-weight: 700; color: #1B3A6B; text-transform: uppercase; letter-spacing: 0.5px; padding: 8px 12px; background: #E8EDF5; border-radius: 6px; margin-bottom: 10px; }
+  .question-item { margin-bottom: 1rem; padding: 14px; border: 1px solid #dde3ec; border-radius: 8px; background: #fafbfc; }
+  .question-text { font-size: 13.5px; font-weight: 600; color: #222; margin-bottom: 10px; line-height: 1.5; }
+  .question-num { display: inline-block; background: #1B3A6B; color: white; width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 700; text-align: center; line-height: 22px; margin-right: 8px; flex-shrink: 0; }
+  .answer-input { width: 100%; border: 1px solid #dde3ec; border-radius: 6px; padding: 10px 12px; font-size: 13px; color: #333; background: white; font-family: inherit; resize: vertical; min-height: 80px; outline: none; transition: border 0.15s; }
   .answer-input:focus { border-color: #1B3A6B; }
   .answer-saved { font-size: 11px; color: #22c55e; margin-top: 4px; display: none; }
-
-  /* PROGRESS */
-  .progress-bar-wrap {
-    background: #e2e8f0;
-    border-radius: 4px;
-    height: 6px;
-    margin-bottom: 1rem;
-    overflow: hidden;
-  }
-  .progress-bar-fill {
-    height: 100%;
-    background: #1B3A6B;
-    border-radius: 4px;
-    transition: width 0.3s;
-    width: 0%;
-  }
-  .progress-text {
-    font-size: 12px;
-    color: #888;
-    margin-bottom: 1rem;
-  }
-
-  /* BUTTONS */
-  .btn {
-    padding: 11px 24px;
-    border-radius: 8px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    border: none;
-    transition: all 0.15s;
-    font-family: inherit;
-  }
+  .progress-bar-wrap { background: #e2e8f0; border-radius: 4px; height: 6px; margin-bottom: 1rem; overflow: hidden; }
+  .progress-bar-fill { height: 100%; background: #1B3A6B; border-radius: 4px; transition: width 0.3s; width: 0%; }
+  .progress-text { font-size: 12px; color: #888; margin-bottom: 1rem; }
+  .btn { padding: 11px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; font-family: inherit; }
   .btn-primary { background: #1B3A6B; color: white; }
   .btn-primary:hover { background: #2a4f8f; }
   .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
@@ -258,60 +61,27 @@
   .btn-success { background: #16a34a; color: white; }
   .btn-success:hover { background: #15803d; }
   .btn-row { display: flex; gap: 10px; justify-content: flex-end; margin-top: 1.5rem; }
-
-  /* LOADING */
-  .loading {
-    display: none;
-    text-align: center;
-    padding: 2rem;
-    color: #888;
-    font-size: 14px;
-  }
+  .loading { display: none; text-align: center; padding: 2rem; color: #888; font-size: 14px; }
   .loading.visible { display: block; }
-  .spinner {
-    width: 36px; height: 36px;
-    border: 3px solid #e2e8f0;
-    border-top-color: #1B3A6B;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 12px;
-  }
+  .spinner { width: 36px; height: 36px; border: 3px solid #e2e8f0; border-top-color: #1B3A6B; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  /* COMPLETE */
   .complete-icon { font-size: 64px; text-align: center; margin-bottom: 1rem; }
   .complete-title { font-size: 22px; font-weight: 700; color: #1B3A6B; text-align: center; margin-bottom: 8px; }
   .complete-sub { font-size: 14px; color: #888; text-align: center; margin-bottom: 2rem; }
-  .complete-stats {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-  }
-  .stat-card {
-    flex: 1;
-    background: #f0f4f8;
-    border-radius: 8px;
-    padding: 1rem;
-    text-align: center;
-  }
+  .complete-stats { display: flex; gap: 1rem; margin-bottom: 2rem; }
+  .stat-card { flex: 1; background: #f0f4f8; border-radius: 8px; padding: 1rem; text-align: center; }
   .stat-value { font-size: 28px; font-weight: 700; color: #1B3A6B; }
   .stat-label { font-size: 12px; color: #888; margin-top: 4px; }
-
   input[type="file"] { display: none; }
-
-  .alert {
-    padding: 10px 14px;
-    border-radius: 8px;
-    font-size: 13px;
-    margin-bottom: 1rem;
-    display: none;
-  }
+  .alert { padding: 10px 14px; border-radius: 8px; font-size: 13px; margin-bottom: 1rem; display: none; }
   .alert.visible { display: block; }
   .alert-error { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
   .alert-success { background: #dcfce7; color: #166534; border: 1px solid #86efac; }
 </style>
 </head>
 <body>
+
+<input type="file" id="fileInput" accept=".pdf,.txt,.docx,.pptx" multiple onchange="handleFileSelect(event)">
 
 <header>
   <div class="header-left">
@@ -325,31 +95,17 @@
 </header>
 
 <main>
-  <!-- STEP INDICATOR -->
   <div class="steps">
-    <div class="step active" id="step1">
-      <span class="step-num">1</span>
-      Setup & Upload
-    </div>
-    <div class="step" id="step2">
-      <span class="step-num">2</span>
-      Review Questions
-    </div>
-    <div class="step" id="step3">
-      <span class="step-num">3</span>
-      Answer Questions
-    </div>
-    <div class="step" id="step4">
-      <span class="step-num">4</span>
-      Download KT Doc
-    </div>
+    <div class="step active" id="step1"><span class="step-num">1</span>Setup & Upload</div>
+    <div class="step" id="step2"><span class="step-num">2</span>Review Questions</div>
+    <div class="step" id="step3"><span class="step-num">3</span>Answer Questions</div>
+    <div class="step" id="step4"><span class="step-num">4</span>Download KT Doc</div>
   </div>
 
   <!-- CARD 1: SETUP -->
   <div class="card active" id="card1">
     <div class="card-title">Step 1 — Setup & Upload Documents</div>
     <div class="card-sub">Tell us about the person leaving and upload the documents they created.</div>
-
     <div class="form-row">
       <div class="form-group">
         <label>Person's Name</label>
@@ -364,7 +120,6 @@
       <label>Project / Context</label>
       <input type="text" id="projectName" placeholder="e.g. Customer Data Platform — Phase 2" />
     </div>
-
     <div class="upload-drop" id="uploadDrop"
       onclick="document.getElementById('fileInput').click()"
       ondragover="handleDragOver(event)"
@@ -375,12 +130,9 @@
         PDF, Word, PowerPoint and TXT files supported · Upload multiple files
       </div>
     </div>
-
     <div class="doc-list" id="docList"></div>
-
     <div class="alert alert-error" id="uploadError"></div>
     <div class="alert alert-success" id="uploadSuccess"></div>
-
     <div class="btn-row">
       <button class="btn btn-primary" id="generateBtn" onclick="generateQuestions()" disabled>
         Generate KT Questions →
@@ -388,7 +140,7 @@
     </div>
   </div>
 
-  <!-- CARD 2: LOADING -->
+  <!-- CARD LOADING -->
   <div class="card" id="cardLoading">
     <div class="loading visible">
       <div class="spinner"></div>
@@ -400,20 +152,15 @@
   <!-- CARD 3: QUESTIONS -->
   <div class="card" id="card3">
     <div class="card-title">Step 3 — Answer the Questions</div>
-    <div class="card-sub">These questions were generated based on your documents. Answer as thoroughly as possible — your answers will form the KT document.</div>
-
+    <div class="card-sub">These questions were generated based on your documents. Answer as thoroughly as possible.</div>
     <div class="progress-bar-wrap">
       <div class="progress-bar-fill" id="progressFill"></div>
     </div>
     <div class="progress-text" id="progressText">0 of 0 questions answered</div>
-
     <div id="questionsContainer"></div>
-
     <div class="btn-row">
       <button class="btn btn-secondary" onclick="goToStep(1)">← Back</button>
-      <button class="btn btn-success" onclick="generateDocument()">
-        📄 Generate KT Document
-      </button>
+      <button class="btn btn-success" onclick="generateDocument()">📄 Generate KT Document</button>
     </div>
   </div>
 
@@ -422,27 +169,22 @@
     <div class="complete-icon">🎉</div>
     <div class="complete-title">KT Document Ready!</div>
     <div class="complete-sub">Your knowledge transfer document has been generated successfully.</div>
-
     <div class="complete-stats" id="completeStats"></div>
-
     <div class="btn-row" style="justify-content: center;">
       <button class="btn btn-primary" onclick="downloadDocument()" style="font-size:15px; padding: 14px 32px;">
         ⬇️ Download Word Document
       </button>
     </div>
-  <div style="text-align:center; margin-top:1rem; display:flex; gap:1rem; justify-content:center;">
-   <button class="btn btn-secondary" onclick="goBackToAnswers()">✏️ Edit Answers</button>
-   <button class="btn btn-secondary" onclick="startOver()">Start New KT Session</button>
-  </div>
+    <div style="text-align:center; margin-top:1rem; display:flex; gap:1rem; justify-content:center;">
+      <button class="btn btn-secondary" onclick="goBackToAnswers()">✏️ Edit Answers</button>
+      <button class="btn btn-secondary" onclick="startOver()">Start New KT Session</button>
+    </div>
   </div>
 </main>
-
-<input type="file" id="fileInput" accept=".pdf,.txt,.docx,.pptx" multiple onchange="handleFileSelect(event)">
 
 <script>
   let uploadedDocs = 0;
   let questions = [];
-  let answeredCount = 0;
 
   function handleDragOver(e) {
     e.preventDefault();
@@ -454,11 +196,6 @@
     document.getElementById('uploadDrop').classList.remove('dragover');
     uploadFiles(e.dataTransfer.files);
   }
- function goBackToAnswers() {
-   document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
-   document.getElementById('card3').classList.add('active');
-   updateStep(3);
-  }
 
   function handleFileSelect(e) {
     uploadFiles(e.target.files);
@@ -469,16 +206,15 @@
     for (let file of files) {
       formData.append('files', file);
     }
-
     try {
       const res = await fetch('/upload', { method: 'POST', body: formData });
       const data = await res.json();
-
       if (data.success) {
         uploadedDocs = data.total_docs;
-        data.uploaded.forEach(name => addDocToList(name));
+        document.getElementById('docList').innerHTML = '';
+        data.all_docs.forEach(name => addDocToList(name));
         document.getElementById('generateBtn').disabled = false;
-        showAlert('uploadSuccess', `✅ ${data.uploaded.length} document(s) uploaded successfully`);
+        showAlert('uploadSuccess', `✅ ${data.uploaded.length} document(s) uploaded — ${data.total_docs} total`);
         hideAlert('uploadError');
       } else {
         showAlert('uploadError', 'Upload failed: ' + data.error);
@@ -492,9 +228,9 @@
     const list = document.getElementById('docList');
     const item = document.createElement('div');
     item.className = 'doc-item';
-    const icon = name.endsWith('.pdf') ? '📄' : 
-              name.endsWith('.docx') ? '📝' : 
-              name.endsWith('.pptx') ? '📊' : '📃';
+    const icon = name.endsWith('.pdf') ? '📄' :
+                 name.endsWith('.docx') ? '📝' :
+                 name.endsWith('.pptx') ? '📊' : '📃';
     item.innerHTML = `<span class="doc-icon">${icon}</span><span class="doc-name">${name}</span><span class="doc-check">✓</span>`;
     list.appendChild(item);
   }
@@ -513,12 +249,9 @@
     const personName = document.getElementById('personName').value;
     const personRole = document.getElementById('personRole').value;
     const projectName = document.getElementById('projectName').value;
-
-    // Show loading
     document.getElementById('card1').classList.remove('active');
     document.getElementById('cardLoading').classList.add('active');
     updateStep(2);
-
     try {
       const res = await fetch('/generate-questions', {
         method: 'POST',
@@ -526,7 +259,6 @@
         body: JSON.stringify({ person_name: personName, role: personRole, project: projectName })
       });
       const data = await res.json();
-
       if (data.success) {
         questions = data.questions;
         renderQuestions(questions);
@@ -550,30 +282,23 @@
   function renderQuestions(questions) {
     const container = document.getElementById('questionsContainer');
     container.innerHTML = '';
-
-    // Group by category
     const categories = {};
     questions.forEach((q, i) => {
       if (!categories[q.category]) categories[q.category] = [];
       categories[q.category].push({ ...q, index: i });
     });
-
     Object.entries(categories).forEach(([cat, qs]) => {
       const group = document.createElement('div');
       group.className = 'category-group';
-
       const catTitle = document.createElement('div');
       catTitle.className = 'category-title';
       catTitle.textContent = cat;
       group.appendChild(catTitle);
-
       qs.forEach(({ question, index }) => {
         const item = document.createElement('div');
         item.className = 'question-item';
         item.innerHTML = `
-          <div class="question-text">
-            <span class="question-num">${index + 1}</span>${question}
-          </div>
+          <div class="question-text"><span class="question-num">${index + 1}</span>${question}</div>
           <textarea class="answer-input" id="answer_${index}"
             placeholder="Type your answer here..."
             onblur="saveAnswer(${index})"
@@ -582,10 +307,8 @@
         `;
         group.appendChild(item);
       });
-
       container.appendChild(group);
     });
-
     updateProgress();
   }
 
@@ -617,7 +340,6 @@
   }
 
   async function generateDocument() {
-    // Save all answers first
     for (let i = 0; i < questions.length; i++) {
       const el = document.getElementById(`answer_${i}`);
       if (el) {
@@ -628,20 +350,14 @@
         });
       }
     }
-
-    // Count answered
     let answered = 0;
     for (let i = 0; i < questions.length; i++) {
       const el = document.getElementById(`answer_${i}`);
       if (el && el.value.trim()) answered++;
     }
-
-    // Show complete screen
     document.getElementById('card3').classList.remove('active');
     document.getElementById('card4').classList.add('active');
     updateStep(4);
-
-    // Stats
     document.getElementById('completeStats').innerHTML = `
       <div class="stat-card"><div class="stat-value">${questions.length}</div><div class="stat-label">Questions Generated</div></div>
       <div class="stat-card"><div class="stat-value">${answered}</div><div class="stat-label">Questions Answered</div></div>
@@ -666,6 +382,12 @@
     document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
     document.getElementById(`card${n}`).classList.add('active');
     updateStep(n);
+  }
+
+  function goBackToAnswers() {
+    document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+    document.getElementById('card3').classList.add('active');
+    updateStep(3);
   }
 
   async function startOver() {
