@@ -100,16 +100,16 @@ def upload():
         if text:
             store["documents"].append({
                 "filename": file.filename,
-                "text": text[:6000]  # limit per doc
+                "text": text[:6000]
             })
             uploaded.append(file.filename)
 
     return jsonify({
         "success": True,
         "uploaded": uploaded,
+        "all_docs": [d["filename"] for d in store["documents"]],
         "total_docs": len(store["documents"])
     })
-
 
 @app.route("/generate-questions", methods=["POST"])
 def generate_questions():
