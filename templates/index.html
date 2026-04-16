@@ -372,7 +372,7 @@
       <div class="upload-icon">📂</div>
       <div class="upload-text">
         <strong>Click to upload documents</strong> or drag and drop<br>
-        PDF and TXT files supported · Upload multiple files
+        PDF, Word, PowerPoint and TXT files supported · Upload multiple files
       </div>
     </div>
 
@@ -437,7 +437,7 @@
   </div>
 </main>
 
-<input type="file" id="fileInput" accept=".pdf,.txt" multiple onchange="handleFileSelect(event)">
+<input type="file" id="fileInput" accept=".pdf,.txt,.docx,.pptx" multiple onchange="handleFileSelect(event)">
 
 <script>
   let uploadedDocs = 0;
@@ -492,7 +492,9 @@
     const list = document.getElementById('docList');
     const item = document.createElement('div');
     item.className = 'doc-item';
-    const icon = name.endsWith('.pdf') ? '📄' : '📝';
+    const icon = name.endsWith('.pdf') ? '📄' : 
+              name.endsWith('.docx') ? '📝' : 
+              name.endsWith('.pptx') ? '📊' : '📃';
     item.innerHTML = `<span class="doc-icon">${icon}</span><span class="doc-name">${name}</span><span class="doc-check">✓</span>`;
     list.appendChild(item);
   }
