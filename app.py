@@ -42,22 +42,46 @@ store = {
 
 def extract_text(file):
     try:
-        if file.filename.endswith(".pdf"):
-            reader = PyPDF2.PdfReader(io.BytesIO(file.read()))
+        filename = file.filename.lower()
+        content = file.read()
+
+        if filename.endswith(".pdf"):
+            reader = PyPDF2.PdfReader(io.BytesIO(content))
             text = ""
             for page in reader.pages:
                 extracted = page.extract_text()
                 if extracted:
                     text += extracted + "\n"
             return text if text else "Could not extract text from PDF"
-        elif file.filename.endswith(".txt"):
-            content = file.read()
+
+        elif filename.endswith(".txt"):
             try:
                 return content.decode("utf-8")
             except:
                 return content.decode("latin-1")
+
+        elif filename.endswith(".docx"):
+            from docx import Document as WordDoc
+            doc = WordDoc(io.BytesIO(content))
+            text = ""
+            for para in doc.paragraphs:
+                if para.text.strip():
+                    text += para.text + "\n"
+            return text if text else "Could not extract text from Word document"
+
+        elif filename.endswith(".pptx"):
+            from pptx import Presentation
+            prs = Presentation(io.BytesIO(content))
+            text = ""
+            for slide in prs.slides:
+                for shape in slide.shapes:
+                    if hasattr(shape, "text") and shape.text.strip():
+                        text += shape.text + "\n"
+            return text if text else "Could not extract text from PowerPoint"
+
         else:
             return None
+
     except Exception as e:
         return f"Error reading file: {str(e)}"
 
